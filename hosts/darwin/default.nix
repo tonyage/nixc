@@ -40,7 +40,6 @@ let user = "tdo"; in
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
-    neovim
     agenix.packages."${pkgs.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
@@ -72,7 +71,7 @@ let user = "tdo"; in
       };
 
       finder = {
-        _FXShowPosixPathInTitle = false;
+        _FXShowPosixPathInTitle = true;
       };
 
       trackpad = {

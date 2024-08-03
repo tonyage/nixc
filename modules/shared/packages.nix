@@ -2,13 +2,13 @@
 
 with pkgs; [
   # General packages for development and system management
-  alacritty
   aspell
   aspellDicts.en
   bash-completion
   btop
   coreutils
   killall
+  neovim
   openssh
   protobuf
   wget
@@ -43,11 +43,8 @@ with pkgs; [
 
   # Text and terminal utilities
   htop
-  jetbrains-mono
   jq
   ripgrep
-  tree
   tmux
   unzip
-  zsh-powerlevel10k
 ]

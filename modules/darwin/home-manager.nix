@@ -76,7 +76,7 @@ in
         { path = "/System/Applications/Utilities/Terminal.app/"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {
-          path = "${config.users.users.${user}.home}/Downloads";
+          path = "${config.users.users.${user}.home}/Downloads/";
           section = "others";
           options = "--sort name --view grid --display folder";
         }

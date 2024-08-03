@@ -4,9 +4,7 @@ let
   githubPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrWClh0M5ZvQ+dL0C0xkWD4paUf2LxoyvADcJQpFZkW tdo@Tonys-MBP";
 in
 {
-
   ".ssh/id_github.pub".text = githubPublicKey;
-
   ".ideavimrc".text = ''
     set argtextobj
     set clipboard=unnamedplus,unnamed,ideaput
