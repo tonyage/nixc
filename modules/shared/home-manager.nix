@@ -64,7 +64,6 @@ in {
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    defaultKeymap = "viins";
     dirHashes = {
       "docs" = "$HOME/Documents";
       "dl" = "$HOME/Downloads";

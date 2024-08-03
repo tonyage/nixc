@@ -25,7 +25,7 @@ in
       use_fancy_tab_bar = false,
       tab_max_width = 24,
       default_cursor_style = "BlinkingBlock",
-      initial_rows = 40,
+      initial_rows = 50,
       initial_cols = 200,
       warn_about_missing_glyphs = false,
       window_close_confirmation = "NeverPrompt",
