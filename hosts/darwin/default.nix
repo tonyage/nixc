@@ -1,4 +1,4 @@
-{ colorscheme, agenix, config, pkgs, ... }:
+{ agenix, config, pkgs, ... }:
 
 let user = "tdo"; in
 

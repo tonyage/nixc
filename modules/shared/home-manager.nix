@@ -7,6 +7,7 @@ let
   main = ./config/p10k/main.zsh;
   tty = ./config/p10k/tty.zsh;
   pure = ./config/p10k/pure.zsh;
+  wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
 in {
   # Shared shell configuration
   fzf = {
@@ -22,10 +23,12 @@ in {
     ];
   };
 
+  inherit wezterm;
+
   bat = {
     enable = true;
     config = {
-      theme = "base16";
+      theme = "base16-256";
       pager = "less -FR";
     };
     extraPackages = with pkgs.bat-extras; [
@@ -61,7 +64,7 @@ in {
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    defaultKeymap = "emacs";
+    defaultKeymap = "viins";
     dirHashes = {
       "docs" = "$HOME/Documents";
       "dl" = "$HOME/Downloads";
@@ -73,6 +76,7 @@ in {
     plugins = [
       { name = "powerlevel10k"; src = pkgs.zsh-powerlevel10k; file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme"; }
       { name = "zsh-autopair"; src = pkgs.zsh-autopair; file = "share/zsh/zsh-autopair/autopair.zsh"; }
+      { name = "vi-mode"; src = pkgs.zsh-vi-mode; file = "share/zsh/zsh-vi-mode/zsh-vi-mode.plugin.zsh"; }
     ];
     initExtraBeforeCompInit = ''
       P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
@@ -131,65 +135,6 @@ in {
       # commit.gpgsign = true;
       pull.rebase = true;
       rebase.autoStash = true;
-    };
-  };
-
-  alacritty = {
-    enable = true;
-    settings = {
-      live_config_reload = true;
-      colors = {
-        draw_bold_text_with_bright_colors = true;
-        primary = {
-          background = "${normal.black}";
-          foreground = "${normal.white}";
-        };
-        bright = {
-          black = "${bright.black}";
-          red = "${bright.red}";
-          green = "${bright.green}";
-          yellow = "${bright.yellow}";
-          blue = "${bright.blue}";
-          magenta = "${bright.magenta}";
-          cyan = "${bright.cyan}";
-          white = "${bright.white}";
-        };
-        normal = {
-          black = "${normal.black}";
-          red = "${normal.red}";
-          green = "${normal.green}";
-          yellow = "${normal.yellow}";
-          blue = "${normal.blue}";
-          magenta = "${normal.magenta}";
-          cyan = "${normal.cyan}";
-          white = "${normal.white}";
-        };
-      };
-      cursor.style = {
-        blinking = "On";
-      };
-      font = {
-        builtin_box_drawing = true;
-        bold = {
-          family = "JetBrainsMono Nerd Font Propo";
-          style = "Bold";
-        };
-        bold_italic = {
-          family = "JetBrainsMono Nerd Font Propo";
-          style = "Bold Italic";
-        };
-        italic = {
-          family = "JetBrainsMono Nerd Font Propo";
-          style = "Italic";
-        };
-        normal = {
-          family = "JetBrainsMono Nerd Font Propo";
-          style = "Regular";
-        };
-        size = 13.0;
-      };
-      selection.save_to_clipboard = true;
-      window.dynamic_title = true;
     };
   };
 

@@ -11,6 +11,7 @@ with pkgs; [
   neovim
   openssh
   protobuf
+  shellcheck
   wget
   zip
 
