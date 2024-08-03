@@ -62,6 +62,10 @@ in {
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     defaultKeymap = "emacs";
+    dirHashes = {
+      "docs" = "$HOME/Documents";
+      "dl" = "$HOME/Downloads";
+    };
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
