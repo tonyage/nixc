@@ -4,9 +4,9 @@ let
   name = "tonyage";
   user = "tdo";
   email = "32802419+tonyage@users.noreply.github.com";
-  main = ./p10k/main.zsh;
-  tty = ./p10k/tty.zsh;
-  pure = ./p10k/pure.zsh;
+  main = ./config/p10k/main.zsh;
+  tty = ./config/p10k/tty.zsh;
+  pure = ./config/p10k/pure.zsh;
 in {
   # Shared shell configuration
   fzf = {
@@ -47,12 +47,21 @@ in {
   jq.enable = true;
 
   eza.enable = true;
+  direnv.enable = true;
+  direnv.nix-direnv.enable = true;
 
   zsh = {
     enable = true;
-    autocd = false;
-    cdpath = [ "~/.local/share/src" ];
     envExtra = ''source $HOME/.zshenv-local'';
+    shellAliases = import ./config/zsh/aliases.nix;
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=${gradients.dark.black90}";
+      strategy = [ "history" "completion" ];
+    };
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
+    defaultKeymap = "emacs";
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -65,14 +74,14 @@ in {
       P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
       [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
       fpath+=("/usr/share/zsh/site-functions")
-      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=${gradients.dark.black90}"
-      ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+      ${builtins.readFile ./config/zsh/docker.zsh}
+      ${builtins.readFile ./config/zsh/utils.zsh}
       eval "$(zoxide init zsh)"
       eval "$(direnv hook zsh)"
     '';
     initExtraFirst = ''
       if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
-        if [ "''${TERM}" = "alacritty" ] || [ "''${TERMINAL_EMULATOR}" = "JetBrains-JediTerm" ]; then
+        if [ "''${TERM}" = "alacritty" ] || [ "''${TERMINAL_EMULATOR}" = "JetBrains-JediTerm" ] || [ "''${TERM_PROGRAM}" = "Apple_Terminal" ]; then
           source ${pure}
         else
           source ${main}
@@ -115,14 +124,14 @@ in {
         autocrlf = "input";
       };
       push.autoSetupRemote = true;
-      commit.gpgsign = true;
+      # commit.gpgsign = true;
       pull.rebase = true;
       rebase.autoStash = true;
     };
   };
 
   alacritty = {
-    enable = false;
+    enable = true;
     settings = {
       live_config_reload = true;
       colors = {
@@ -158,22 +167,22 @@ in {
       font = {
         builtin_box_drawing = true;
         bold = {
-          family = "JetbrainsMono Nerd Font Propo";
+          family = "JetBrainsMono Nerd Font Propo";
           style = "Bold";
         };
         bold_italic = {
-          family = "JetbrainsMono Nerd Font Propo";
+          family = "JetBrainsMono Nerd Font Propo";
           style = "Bold Italic";
         };
         italic = {
-          family = "JetbrainsMono Nerd Font Propo";
+          family = "JetBrainsMono Nerd Font Propo";
           style = "Italic";
         };
         normal = {
-          family = "JetbrainsMono Nerd Font Propo";
+          family = "JetBrainsMono Nerd Font Propo";
           style = "Regular";
         };
-        size = 10.0;
+        size = 13.0;
       };
       selection.save_to_clipboard = true;
       window.dynamic_title = true;
@@ -237,7 +246,7 @@ in {
         '';
       }
     ];
-    terminal = "screen-256color";
+    terminal = "screen-256xcolor";
     prefix = "C-x";
     escapeTime = 10;
     historyLimit = 50000;

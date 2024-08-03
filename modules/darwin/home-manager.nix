@@ -6,9 +6,6 @@ let
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
   colorscheme = import ../../colorschemes/dusk.nix;
-#  colorscheme = {
-#    _module.args = { colorscheme = import ../../colorschemes/dusk.nix; };
-#  };
 in
 {
   imports = [
@@ -70,12 +67,19 @@ in
       entries = [
         { path = "/System/Applications/Music.app/"; }
         { path = "/System/Applications/Calendar.app/"; }
-        { path = "/System/Applications/Safari.app/"; }
         { path = "/System/Applications/Mail.app/"; }
+        { path = "/System/Cryptexes/App/System/Applications/Safari.app/"; }
         { path = "/Applications/Slack.app/"; }
         { path = "/Applications/Microsoft\ Teams.app/"; }
+        { path = "/Applications/IntelliJ\ IDEA.app/"; }
         { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+        { path = "/System/Applications/Utilities/Terminal.app/"; }
         { path = "/System/Applications/System\ Settings.app"; }
+        {
+          path = "${config.users.users.${user}.home}/Downloads";
+          section = "others";
+          options = "--sort name --view grid --display folder";
+        }
       ];
     };
   };

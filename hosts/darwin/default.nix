@@ -33,6 +33,8 @@ let user = "tdo"; in
     '';
   };
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
@@ -75,7 +77,7 @@ let user = "tdo"; in
 
       trackpad = {
         Clicking = true;
-        TrackpadThreeFingerDrag = true;
+        TrackpadThreeFingerDrag = false;
       };
     };
   };
