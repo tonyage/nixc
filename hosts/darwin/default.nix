@@ -19,12 +19,15 @@ let user = "tdo"; in
   nix = {
     package = pkgs.nix;
     settings.trusted-users = [ "@admin" "${user}" ];
-
+    optimise = {
+      automatic = true;
+      interval = { Weekday = 0; Hour = 0; Minute = 0; };
+    };
     gc = {
       user = "root";
       automatic = true;
       interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
+      options = "--delete-older-than 3d";
     };
 
     # Turn this on to make command line easier
@@ -71,7 +74,7 @@ let user = "tdo"; in
       };
 
       finder = {
-        _FXShowPosixPathInTitle = true;
+        _FXShowPosixPathInTitle = false;
       };
 
       trackpad = {
