@@ -64,10 +64,6 @@ in {
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
-    dirHashes = {
-      "docs" = "$HOME/Documents";
-      "dl" = "$HOME/Downloads";
-    };
     sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
@@ -81,6 +77,7 @@ in {
       P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
       [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
       fpath+=("/usr/share/zsh/site-functions")
+      fpath+=("/opt/homebrew/share/zsh/site-functions")
       ${builtins.readFile ./config/zsh/docker.zsh}
       ${builtins.readFile ./config/zsh/utils.zsh}
       eval "$(zoxide init zsh)"
@@ -127,7 +124,7 @@ in {
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-	    editor = "nvim";
+	      editor = "nvim";
         autocrlf = "input";
       };
       push.autoSetupRemote = true;

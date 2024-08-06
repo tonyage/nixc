@@ -26,7 +26,7 @@ in
       tab_max_width = 24,
       default_cursor_style = "BlinkingBlock",
       initial_rows = 50,
-      initial_cols = 200,
+      initial_cols = 180,
       warn_about_missing_glyphs = false,
       window_close_confirmation = "NeverPrompt",
       window_decorations = "INTEGRATED_BUTTONS|RESIZE",
@@ -40,6 +40,11 @@ in
         bottom = 0,
       },
       keys = {
+        {
+          key = 'e',
+          mods = 'CTRL',
+          action = wezterm.action.SendKey { key = 'RightArrow' }
+        },
         {
           key = '-',
           mods = 'ALT',

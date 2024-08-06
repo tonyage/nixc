@@ -49,6 +49,11 @@ let user = "tdo"; in
   system = {
     stateVersion = 4;
 
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToControl = true;
+    };
+
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;

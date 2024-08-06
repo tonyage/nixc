@@ -23,6 +23,7 @@ in
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix {};
+    # brews = pkgs.callPackage ./brews.nix {};
     # onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
@@ -69,7 +70,6 @@ in
         { path = "/Applications/Microsoft\ Teams.app/"; }
         { path = "/Applications/IntelliJ\ IDEA.app/"; }
         { path = "${config.users.users.${user}.home}/Applications/Home\ Manager\ Apps/WezTerm.app/"; }
-        { path = "/System/Applications/Utilities/Terminal.app/"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {
           path = "${config.users.users.${user}.home}/Downloads/";

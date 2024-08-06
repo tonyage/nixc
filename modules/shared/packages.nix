@@ -12,6 +12,7 @@ with pkgs; [
   openssh
   protobuf
   shellcheck
+  ruff
   wget
   zip
 

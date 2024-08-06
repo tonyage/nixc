@@ -79,4 +79,87 @@ in
     nmap grn <Action>(RenameElement)
     nmap grg <Action>(Generate)
   '';
+  ".config/btop/themes/dusk.theme".text = ''
+  # Theme: dusk
+  # By: tonyage
+
+  # Main bg
+  theme[main_bg]="${normal.black}"
+
+  # Main text color
+  theme[main_fg]="${bright.white}"
+
+  # Title color for boxes
+  theme[title]="${bright.white}"
+
+  # Highlight color for keyboard shortcuts
+  theme[hi_fg]="${bright.blue}"
+
+  # Background color of selected item in processes box
+  theme[selected_bg]="${gradients.dark.black10}"
+
+  # Foreground color of selected item in processes box
+  theme[selected_fg]="${bright.white}"
+
+  # Color of inactive/disabled text
+  theme[inactive_fg]="${gradients.dark.black25}"
+
+  # Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+  theme[proc_misc]="${bright.blue}"
+
+  # Cpu box outline color
+  theme[cpu_box]="${normal.orange}"
+
+  # Memory/disks box outline color
+  theme[mem_box]="${normal.magenta}"
+
+  # Net up/down box outline color
+  theme[net_box]="${normal.cyan}"
+
+  # Processes box outline color
+  theme[proc_box]="${normal.red}"
+
+  # Box divider line and small boxes line color
+  theme[div_line]="${gradients.dark.black25}"
+
+  # Temperature graph colors
+  theme[temp_start]="${bright.green}"
+  theme[temp_mid]="${bright.yellow}"
+  theme[temp_end]="${bright.red}"
+
+  # CPU graph colors
+  theme[cpu_start]="${bright.green}"
+  theme[cpu_mid]="${bright.yellow}"
+  theme[cpu_end]="${bright.red}"
+
+  # Mem/Disk free meter
+  theme[free_start]="${bright.green}"
+  theme[free_mid]="${bright.yellow}"
+  theme[free_end]="${bright.red}"
+
+  # Mem/Disk cached meter
+  theme[cached_start]="${bright.green}"
+  theme[cached_mid]="${bright.yellow}"
+  theme[cached_end]="${bright.red}"
+
+  # Mem/Disk available meter
+  theme[available_start]="${bright.green}"
+  theme[available_mid]="${bright.yellow}"
+  theme[available_end]="${bright.red}"
+
+  # Mem/Disk used meter
+  theme[used_start]="${bright.green}"
+  theme[used_mid]="${bright.yellow}"
+  theme[used_end]="${bright.red}"
+
+  # Download graph colors
+  theme[download_start]="${bright.green}"
+  theme[download_mid]="${bright.yellow}"
+  theme[download_end]="${bright.red}"
+
+  # Upload graph colors
+  theme[upload_start]="${bright.green}"
+  theme[upload_mid]="${bright.yellow}"
+  theme[upload_end]="${bright.red}"
+  '';
 }
