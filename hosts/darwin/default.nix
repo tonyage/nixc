@@ -75,7 +75,7 @@ let user = "tdo"; in
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
-        tilesize = 48;
+        tilesize = 60;
       };
 
       finder = {

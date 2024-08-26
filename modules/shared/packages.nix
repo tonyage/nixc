@@ -49,4 +49,8 @@ with pkgs; [
   ripgrep
   tmux
   unzip
+  luarocks
+  statix
+  yamlfmt
+  yamllint
 ]

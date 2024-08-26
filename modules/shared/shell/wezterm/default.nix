@@ -1,6 +1,6 @@
 { colorscheme, config, pkgs, ... }: with colorscheme;
 let
-  fontSize = if pkgs.system == "x86_64-linux" then "10.0" else "13.0";
+  fontSize = if pkgs.system == "x86_64-linux" then "10.0" else "14.0";
   lineHeight = "1.2";
 in
 {
@@ -40,11 +40,6 @@ in
         bottom = 0,
       },
       keys = {
-        {
-          key = 'e',
-          mods = 'CTRL',
-          action = wezterm.action.SendKey { key = 'RightArrow' }
-        },
         {
           key = '-',
           mods = 'ALT',
