@@ -63,13 +63,11 @@ in
       enable = true;
       entries = [
         { path = "/System/Applications/Music.app/"; }
-        { path = "/System/Applications/Calendar.app/"; }
-        { path = "/System/Applications/Mail.app/"; }
-        { path = "/Applications/Safari.app/"; }
         { path = "/Applications/Slack.app/"; }
         { path = "/Applications/Microsoft\ Teams.app/"; }
         { path = "/Applications/IntelliJ\ IDEA.app/"; }
         { path = "${config.users.users.${user}.home}/Applications/Home\ Manager\ Apps/WezTerm.app/"; }
+        { path = "/Applications/Safari.app/"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {
           path = "${config.users.users.${user}.home}/Downloads/";

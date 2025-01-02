@@ -13,6 +13,9 @@ with pkgs; [
   protobuf
   shellcheck
   ruff
+  rustc
+  cargo
+  rustfmt
   wget
   zip
 
