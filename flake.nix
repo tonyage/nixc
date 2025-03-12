@@ -65,6 +65,7 @@
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
           exec ${self}/apps/${system}/${scriptName}
+          exec ${self}/apps/common/${scriptName}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
@@ -78,7 +79,6 @@
       };
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
         "build-switch" = mkApp "build-switch" system;
         "copy-keys" = mkApp "copy-keys" system;
         "create-keys" = mkApp "create-keys" system;

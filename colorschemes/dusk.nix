@@ -60,6 +60,6 @@
     dark-green = "#a0efa0";
   };
   misc = {
-    pink = "#de8c92";
+    pink = "#f2a4db";
   };
 }

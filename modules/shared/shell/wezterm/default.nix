@@ -1,6 +1,6 @@
 { colorscheme, config, pkgs, ... }: with colorscheme;
 let
-  fontSize = if pkgs.system == "x86_64-linux" then "10.0" else "14.0";
+  fontSize = if pkgs.system == "x86_64-linux" then "10.0" else "11.0";
   lineHeight = "1.2";
 in
 {

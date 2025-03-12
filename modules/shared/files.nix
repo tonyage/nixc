@@ -1,10 +1,10 @@
-{ colorscheme, pkgs, config, ... }:
+{ colorscheme, lib, pkgs, config, ... }:
 with colorscheme;
 let
-  githubPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrWClh0M5ZvQ+dL0C0xkWD4paUf2LxoyvADcJQpFZkW tdo@Tonys-MBP";
+  # githubPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrWClh0M5ZvQ+dL0C0xkWD4paUf2LxoyvADcJQpFZkW tdo@Tonys-MBP";
 in
 {
-  ".ssh/id_github.pub".text = githubPublicKey;
+  # ".ssh/id_github.pub".text = githubPublicKey;
   ".ideavimrc".text = ''
     set argtextobj
     set clipboard=unnamedplus,unnamed,ideaput
@@ -161,5 +161,39 @@ in
   theme[upload_start]="${bright.green}"
   theme[upload_mid]="${bright.yellow}"
   theme[upload_end]="${bright.red}"
+  '';
+  ".config/ghostty/config".text = ''
+  window-colorspace = "display-p3"
+
+  palette = 0=${normal.black}
+  palette = 1=${bright.red}
+  palette = 2=${bright.green}
+  palette = 3=${bright.yellow}
+  palette = 4=${bright.blue}
+  palette = 5=${bright.magenta}
+  palette = 6=${bright.cyan}
+  palette = 7=${bright.white}
+  palette = 8=${normal.black}
+  palette = 9=${normal.red}
+  palette = 10=${normal.green}
+  palette = 11=${normal.yellow}
+  palette = 12=${normal.blue}
+  palette = 13=${normal.magenta}
+  palette = 14=${normal.cyan}
+  palette = 15=${normal.white}
+
+  adjust-cell-height = 30%
+  adjust-cursor-height = 30%
+  window-height = 50
+  window-width = 180
+
+  cursor-color = ${lib.strings.removePrefix "#" normal.white}
+  cursor-style = block
+  cursor-style-blink = true
+  shell-integration-features = no-cursor
+  font-size = 12
+
+  background = ${lib.strings.removePrefix "#" normal.black}
+  foreground = ${lib.strings.removePrefix "#" normal.white}
   '';
 }

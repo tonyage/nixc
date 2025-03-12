@@ -2,15 +2,17 @@ _:
 
 [
   # Development Tools
-  "homebrew/cask/docker"
-  "visual-studio-code"
+  # "homebrew/cask/docker"
+  # "visual-studio-code"
   "intellij-idea"
-  # "ghostty"
+  "ghostty"
 
   # Communication Tools
-  "slack"
-  "microsoft-teams"
+  # "slack"
+  # "microsoft-teams"
+  "discord"
+  "steam"
 
   # Browsers
-  # "google-chrome"
+  "google-chrome"
 ]

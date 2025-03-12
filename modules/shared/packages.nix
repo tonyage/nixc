@@ -5,19 +5,33 @@ with pkgs; [
   aspell
   aspellDicts.en
   bash-completion
+  black
   btop
+  clang-tools
   coreutils
+  isort
   killall
   neovim
   openssh
   protobuf
-  shellcheck
   ruff
   rustc
   cargo
   rustfmt
+  shellcheck
+  shfmt
+  sqruff
+  treefmt
+  uv
   wget
   zip
+
+  # Language servers
+  gopls
+  ruff-lsp
+  marksman
+  spectral-language-server
+  yaml-language-server
 
   # Encryption and security tools
   age
@@ -37,9 +51,8 @@ with pkgs; [
   noto-fonts
   noto-fonts-emoji
   meslo-lgs-nf
-  (nerdfonts.override {
-    fonts = [ "JetBrainsMono" ];
-  })
+  nerd-fonts.jetbrains-mono
+  transmission_4
 
   # Node.js development tools
   nodePackages.npm # globally install npm

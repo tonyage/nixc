@@ -2,9 +2,8 @@
 
 let
   user = "tdo";
-  # Define the content of your file as a derivation
   colorscheme = import ../../colorschemes/dusk.nix;
-  sharedFiles = import ../shared/files.nix { inherit colorscheme config pkgs; };
+  sharedFiles = import ../shared/files.nix { inherit colorscheme config lib pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
@@ -40,6 +39,7 @@ in
 
   # Enable home-manager
   home-manager = {
+    backupFileExtension = "backup";
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit colorscheme; };
     users.${user} = { pkgs, config, lib, ... }:{
@@ -62,12 +62,14 @@ in
     dock = {
       enable = true;
       entries = [
+        { path = "/System/Applications/Mail.app/"; }
         { path = "/System/Applications/Music.app/"; }
-        { path = "/Applications/Slack.app/"; }
-        { path = "/Applications/Microsoft\ Teams.app/"; }
+        { path = "/System/Applications/Messages.app/"; }
+        { path = "/Applications/Discord.app/"; }
         { path = "/Applications/IntelliJ\ IDEA.app/"; }
-        { path = "${config.users.users.${user}.home}/Applications/Home\ Manager\ Apps/WezTerm.app/"; }
+        { path = "/Applications/Ghostty.app/"; }
         { path = "/Applications/Safari.app/"; }
+        { path = "/Applications/ChatGPT.app/"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {
           path = "${config.users.users.${user}.home}/Downloads/";

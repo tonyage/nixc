@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source ./ssh.sh
+
+lint_keys

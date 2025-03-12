@@ -15,6 +15,6 @@ chpwd() {
   echo "\x1b]1337;SetUserVar=panetitle=$(echo -n $(basename $(pwd)) | base64)\x07"
 }
 
-trn() {
-  wezterm cli set-tab-title "$@"
-}
+# trn() {
+#   wezterm cli set-tab-title "$@"
+# }

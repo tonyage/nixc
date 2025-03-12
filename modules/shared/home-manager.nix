@@ -7,7 +7,7 @@ let
   main = ./config/p10k/main.zsh;
   tty = ./config/p10k/tty.zsh;
   pure = ./config/p10k/pure.zsh;
-  wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
+  # wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
 in {
   # Shared shell configuration
   fzf = {
@@ -23,7 +23,7 @@ in {
     ];
   };
 
-  inherit wezterm;
+  # inherit wezterm;
 
   bat = {
     enable = true;

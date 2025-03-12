@@ -12,6 +12,7 @@ let user = "tdo"; in
   age = {
     identityPaths = [
       "/Users/${user}/.ssh/id_ed25519"
+      "/Users/${user}/.ssh/id_github"
     ];
     secrets = {
       "github-ssh-key" = {
