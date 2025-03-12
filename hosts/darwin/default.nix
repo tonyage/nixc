@@ -12,11 +12,10 @@ let user = "tdo"; in
      agenix.darwinModules.default
   ];
 
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
 
   # Setup user, packages, programs
   nix = {
+    enable = true;
     package = pkgs.nix;
     settings.trusted-users = [ "@admin" "${user}" ];
     optimise = {
@@ -24,7 +23,6 @@ let user = "tdo"; in
       interval = { Weekday = 0; Hour = 0; Minute = 0; };
     };
     gc = {
-      user = "root";
       automatic = true;
       interval = { Weekday = 0; Hour = 2; Minute = 0; };
       options = "--delete-older-than 3d";
@@ -36,7 +34,7 @@ let user = "tdo"; in
     '';
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
@@ -47,7 +45,7 @@ let user = "tdo"; in
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   system = {
-    stateVersion = 4;
+    stateVersion = 6;
 
     keyboard = {
       enableKeyMapping = true;
