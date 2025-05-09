@@ -28,7 +28,6 @@ with pkgs; [
 
   # Language servers
   gopls
-  ruff-lsp
   marksman
   spectral-language-server
   yaml-language-server

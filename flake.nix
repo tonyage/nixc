@@ -85,8 +85,7 @@
         "check-keys" = mkApp "check-keys" system;
         "rollback" = mkApp "rollback" system;
       };
-    in
-    {
+    in {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
@@ -129,6 +128,7 @@
           }
           ./hosts/nixos
         ];
-     });
+      }
+    );
   };
 }

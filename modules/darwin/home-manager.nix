@@ -70,6 +70,7 @@ in
         { path = "/Applications/Ghostty.app/"; }
         { path = "/Applications/Safari.app/"; }
         { path = "/Applications/ChatGPT.app/"; }
+        { path = "/System/Applications/Passwords.app"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {
           path = "${config.users.users.${user}.home}/Downloads/";

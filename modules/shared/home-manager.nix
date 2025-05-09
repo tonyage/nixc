@@ -28,11 +28,11 @@ in {
   bat = {
     enable = true;
     config = {
-      theme = "base16-256";
+      theme = "dusk";
       pager = "less -FR";
+      map-syntax = "*.keymap:C";
     };
     extraPackages = with pkgs.bat-extras; [
-      batdiff
       batgrep
       batman
       batpipe
@@ -60,7 +60,7 @@ in {
     shellAliases = import ./config/zsh/aliases.nix;
     autosuggestion = {
       enable = true;
-      highlight = "fg=${gradients.dark.black90}";
+      highlight = "fg=${gradients.dark.black15}";
       strategy = [ "history" "completion" ];
     };
     enableCompletion = true;
@@ -73,17 +73,7 @@ in {
       { name = "powerlevel10k"; src = pkgs.zsh-powerlevel10k; file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme"; }
       { name = "zsh-autopair"; src = pkgs.zsh-autopair; file = "share/zsh/zsh-autopair/autopair.zsh"; }
     ];
-    initExtraBeforeCompInit = ''
-      P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
-      [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
-      fpath+=("/usr/share/zsh/site-functions")
-      fpath+=("/opt/homebrew/share/zsh/site-functions")
-      ${builtins.readFile ./config/zsh/docker.zsh}
-      ${builtins.readFile ./config/zsh/utils.zsh}
-      eval "$(zoxide init zsh)"
-      eval "$(direnv hook zsh)"
-    '';
-    initExtraFirst = ''
+    initContent = lib.mkBefore ''
       if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
         if [ "''${TERM}" = "alacritty" ] || [ "''${TERMINAL_EMULATOR}" = "JetBrains-JediTerm" ] || [ "''${TERM_PROGRAM}" = "Apple_Terminal" ]; then
           source ${pure}
@@ -93,6 +83,15 @@ in {
       else
         source ${tty}
       fi
+
+      P10K_INSTANT_PROMPT="$XDG_CACHE_HOME/p10k-instant-prompt-''${(%):-%n}.zsh"
+      [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
+      fpath+=("/usr/share/zsh/site-functions")
+      fpath+=("/opt/homebrew/share/zsh/site-functions")
+      ${builtins.readFile ./config/zsh/docker.zsh}
+      ${builtins.readFile ./config/zsh/utils.zsh}
+      eval "$(zoxide init zsh)"
+      eval "$(direnv hook zsh)"
     '';
   };
 
@@ -128,7 +127,6 @@ in {
         autocrlf = "input";
       };
       push.autoSetupRemote = true;
-      # commit.gpgsign = true;
       pull.rebase = true;
       rebase.autoStash = true;
     };

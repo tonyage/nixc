@@ -5,6 +5,7 @@ let
 in
 {
   # ".ssh/id_github.pub".text = githubPublicKey;
+  ".config/bat/themes/dusk.tmTheme".source = config/bat/dusk.tmTheme;
   ".ideavimrc".text = ''
     set argtextobj
     set clipboard=unnamedplus,unnamed,ideaput
@@ -182,8 +183,8 @@ in
   palette = 14=${normal.cyan}
   palette = 15=${normal.white}
 
-  adjust-cell-height = 30%
-  adjust-cursor-height = 30%
+  adjust-cell-height = 20%
+  adjust-cursor-height = 20%
   window-height = 50
   window-width = 180
 
