@@ -1,4 +1,4 @@
-{ user, config, pkgs, ... }:
+{ user, config, ... }:
 
 let
   xdg_configHome = "${config.users.users.${user}.home}/.config";

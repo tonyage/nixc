@@ -1,9 +1,8 @@
-{ agenix, config, pkgs, ... }:
+{ agenix, pkgs, ... }:
 
 let user = "tdo"; in
 
 {
-
   imports = [
     ../../modules/darwin/secrets.nix
     ../../modules/darwin/home-manager.nix

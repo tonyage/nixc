@@ -1,4 +1,4 @@
-{ colorscheme, config, pkgs, lib, ... }:
+{ colorscheme, pkgs, lib, ... }:
 with colorscheme;
 let
   name = "tonyage";

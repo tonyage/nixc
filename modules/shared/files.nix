@@ -1,10 +1,6 @@
-{ colorscheme, lib, pkgs, config, ... }:
+{ colorscheme, lib, ... }:
 with colorscheme;
-let
-  # githubPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILrWClh0M5ZvQ+dL0C0xkWD4paUf2LxoyvADcJQpFZkW tdo@Tonys-MBP";
-in
 {
-  # ".ssh/id_github.pub".text = githubPublicKey;
   ".config/bat/themes/dusk.tmTheme".source = config/bat/dusk.tmTheme;
   ".ideavimrc".text = ''
     set argtextobj
@@ -192,7 +188,7 @@ in
   cursor-style = block
   cursor-style-blink = true
   shell-integration-features = no-cursor
-  font-size = 12
+  font-size = 10
 
   background = ${lib.strings.removePrefix "#" normal.black}
   foreground = ${lib.strings.removePrefix "#" normal.white}
