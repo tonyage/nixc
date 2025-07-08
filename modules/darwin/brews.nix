@@ -7,4 +7,6 @@ _:
   #   restart_service = true;
   #   link = true;
   # }
+
+  { name = "go"; }
 ]
