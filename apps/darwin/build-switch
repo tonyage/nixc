@@ -34,7 +34,7 @@ switch() {
 		# We pass SSH from user to root so root can download secrets from our private Github
 		sudo SSH_AUTH_SOCK="$SSH_AUTH_SOCK" /run/current-system/sw/bin/nixos-rebuild switch --flake .#"$SYSTEM_TYPE" "$@"
 	else
-		./result/sw/bin/darwin-rebuild switch --flake .#"$SYSTEM_TYPE" "$@"
+		sudo ./result/sw/bin/darwin-rebuild switch --flake .#"$SYSTEM_TYPE" "$@"
 	fi
 }
 

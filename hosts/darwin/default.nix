@@ -44,6 +44,7 @@ let user = "tdo"; in
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   system = {
+    primaryUser = "${user}";
     stateVersion = 6;
 
     keyboard = {

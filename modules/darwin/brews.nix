@@ -9,4 +9,5 @@ _:
   # }
 
   { name = "go"; }
+  { name = "xcodegen"; }
 ]
