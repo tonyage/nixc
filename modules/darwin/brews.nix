@@ -10,4 +10,5 @@ _:
 
   { name = "go"; }
   { name = "xcodegen"; }
+  { name = "yt-dlp"; }
 ]

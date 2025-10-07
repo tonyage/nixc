@@ -188,7 +188,7 @@ with colorscheme;
   cursor-style = block
   cursor-style-blink = true
   shell-integration-features = no-cursor
-  font-size = 10
+  font-size = 12
 
   background = ${lib.strings.removePrefix "#" normal.black}
   foreground = ${lib.strings.removePrefix "#" normal.white}

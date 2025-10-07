@@ -66,6 +66,7 @@ in
         { path = "/System/Applications/Music.app/"; }
         { path = "/System/Applications/Messages.app/"; }
         { path = "/Applications/Discord.app/"; }
+        { path = "/Applications/Xcode.app/"; }
         { path = "/Applications/IntelliJ\ IDEA.app/"; }
         { path = "/Applications/Ghostty.app/"; }
         { path = "/Applications/Safari.app/"; }

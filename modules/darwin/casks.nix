@@ -6,6 +6,7 @@ _:
   # "visual-studio-code"
   "intellij-idea"
   "ghostty"
+  "qbittorrent"
 
   # Communication Tools
   # "slack"
@@ -15,4 +16,5 @@ _:
 
   # Browsers
   "google-chrome"
+  "vlc"
 ]
