@@ -48,14 +48,14 @@ with pkgs; [
   font-awesome
   hack-font
   noto-fonts
-  noto-fonts-emoji
+  noto-fonts-color-emoji
   meslo-lgs-nf
   nerd-fonts.jetbrains-mono
   transmission_4
 
   # Node.js development tools
-  nodePackages.npm # globally install npm
-  nodePackages.prettier
+  pnpm # globally install npm
+  prettier
   nodejs
 
   # Text and terminal utilities

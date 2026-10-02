@@ -95,32 +95,35 @@ in {
     '';
   };
 
+  delta = {
+    enableGitIntegration = true;
+    options = {
+      features = "line-numbers decorations";
+      decorations = {
+        commit-style = "raw";
+      };
+      syntax-theme = "base16";
+    };
+  };
+
   git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = name;
-    userEmail = email;
     lfs = {
       enable = true;
     };
-    aliases = {
-      ra = "rebase --abort";
-      rc = "rebase --continue";
-      ma = "merge --abort";
-      mc = "merge --continue";
-      plog = "log --all --decorate --oneline --graph";
-    };
-    delta = {
-      enable = true;
-      options = {
-        features = "line-numbers decorations";
-        decorations = {
-          commit-style = "raw";
-        };
-        syntax-theme = "base16";
+    settings = {
+      aliases = {
+        ra = "rebase --abort";
+        rc = "rebase --continue";
+        ma = "merge --abort";
+        mc = "merge --continue";
+        plog = "log --all --decorate --oneline --graph";
       };
-    };
-    extraConfig = {
+      user = {
+        inherit email;
+        inherit name;
+      };
       init.defaultBranch = "main";
       core = {
 	      editor = "nvim";
@@ -134,6 +137,7 @@ in {
 
   ssh = {
     enable = true;
+    enableDefaultConfig = false;
     includes = [
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
         "/home/${user}/.ssh/config_external"

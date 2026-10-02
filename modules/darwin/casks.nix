@@ -4,6 +4,7 @@ _:
   # Development Tools
   # "docker"
   # "visual-studio-code"
+  "claude-code"
   "intellij-idea"
   "ghostty"
   "qbittorrent"

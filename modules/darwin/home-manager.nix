@@ -66,11 +66,9 @@ in
         { path = "/System/Applications/Music.app/"; }
         { path = "/System/Applications/Messages.app/"; }
         { path = "/Applications/Discord.app/"; }
-        { path = "/Applications/Xcode.app/"; }
         { path = "/Applications/IntelliJ\ IDEA.app/"; }
         { path = "/Applications/Ghostty.app/"; }
         { path = "/Applications/Safari.app/"; }
-        { path = "/Applications/ChatGPT.app/"; }
         { path = "/System/Applications/Passwords.app"; }
         { path = "/System/Applications/System\ Settings.app"; }
         {

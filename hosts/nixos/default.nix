@@ -288,7 +288,7 @@ let user = "tdo";
     jetbrains-mono
     font-awesome
     noto-fonts
-    noto-fonts-emoji
+    noto-fonts-color-emoji
   ];
 
   environment.systemPackages = with pkgs; [
