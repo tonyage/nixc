@@ -7,6 +7,10 @@ let
   main = ./config/p10k/main.zsh;
   tty = ./config/p10k/tty.zsh;
   pure = ./config/p10k/pure.zsh;
+  idFile =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "/Users/${user}/.ssh/id_github"
+    else "/home/${user}/.ssh/id_github";
   # wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
 in {
   # Shared shell configuration
@@ -14,7 +18,7 @@ in {
     enable = true;
     enableZshIntegration = true;
     defaultCommand = "fd --type f --strip-cwd-prefix";
-    fileWidgetCommand = "fd --type f --strip-cwd-prefix --exclude .git";
+    fileWidget.command = "fd --type f --strip-cwd-prefix --exclude .git";
     defaultOptions = [
       "--border"
       "--color fg:${normal.white},fg+:${normal.green},bg:${normal.black},bg+:${normal.black}"
@@ -146,17 +150,10 @@ in {
         "/Users/${user}/.ssh/config_external"
       )
     ];
-    matchBlocks = {
+    settings = {
       "github.com" = {
         identitiesOnly = true;
-        identityFile = [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-            "/home/${user}/.ssh/id_github"
-          )
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-            "/Users/${user}/.ssh/id_github"
-          )
-        ];
+        identityFile = idFile;
       };
     };
   };

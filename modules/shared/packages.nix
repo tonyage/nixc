@@ -58,6 +58,10 @@ with pkgs; [
   prettier
   nodejs
 
+  # llm tooling
+  opencode
+  opencode-claude-auth
+
   # Text and terminal utilities
   htop
   jq
