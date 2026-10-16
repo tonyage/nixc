@@ -1,6 +1,6 @@
-{ agenix, pkgs, ... }:
+{ agenix, pkgs, identity, ... }:
 
-let user = "tdo"; in
+let inherit (identity) user; in
 
 {
   imports = [
@@ -40,7 +40,7 @@ let user = "tdo"; in
 
   # Load configuration that is shared across systems
   environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.system}".default
+    agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   system = {

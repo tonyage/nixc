@@ -1,9 +1,7 @@
-{ colorscheme, pkgs, lib, ... }:
+{ colorscheme, pkgs, lib, identity, ... }:
 with colorscheme;
 let
-  name = "tonyage";
-  user = "tdo";
-  email = "32802419+tonyage@users.noreply.github.com";
+  inherit (identity) user name email;
   main = ./config/p10k/main.zsh;
   tty = ./config/p10k/tty.zsh;
   pure = ./config/p10k/pure.zsh;
@@ -11,8 +9,18 @@ let
     if pkgs.stdenv.hostPlatform.isDarwin then
       "/Users/${user}/.ssh/id_github"
     else "/home/${user}/.ssh/id_github";
+  repo =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "/Users/${user}/git/personal/nix-config"
+    else "/home/${user}/git/personal/nix-config";
   # wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
 in {
+  # Rebuild helper: `nh darwin switch` / `nh os switch` show a package diff before switching
+  nh = {
+    enable = true;
+    flake = repo;
+  };
+
   # Shared shell configuration
   fzf = {
     enable = true;
@@ -113,11 +121,13 @@ in {
   git = {
     enable = true;
     ignores = [ "*.swp" ];
+    # Untracked per-machine overrides (e.g. a work email); skipped by git if missing
+    includes = [ { path = "~/.config/git/local"; } ];
     lfs = {
       enable = true;
     };
     settings = {
-      aliases = {
+      alias = {
         ra = "rebase --abort";
         rc = "rebase --continue";
         ma = "merge --abort";

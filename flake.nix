@@ -46,7 +46,8 @@
    secrets
   } @inputs:
     let
-      user = "tdo";
+      identity = import "${secrets}/identity.nix";
+      inherit (identity) user;
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
@@ -58,42 +59,17 @@
           '';
         };
       };
-      mkApp = scriptName: system: {
-        type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-          #!/usr/bin/env bash
-          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
-          exec ${self}/apps/common/${scriptName}
-        '')}/bin/${scriptName}";
-      };
-      mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "install" = mkApp "install" system;
-        "install-with-secrets" = mkApp "install-with-secrets" system;
-      };
-      mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "rollback" = mkApp "rollback" system;
-      };
     in {
       devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (system:
+      # One configuration per host in identity.darwinHosts; darwin-rebuild looks up
+      # .#$(scutil --get LocalHostName) by default, so no target is needed on each Mac.
+      darwinConfigurations = nixpkgs.lib.genAttrs identity.darwinHosts (hostName:
         darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = inputs;
+          system = "aarch64-darwin";
+          specialArgs = inputs // { inherit identity; };
           modules = [
+            { networking.localHostName = hostName; }
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {
@@ -114,15 +90,19 @@
         }
       );
 
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = inputs;
+      # One configuration per host in identity.nixosHosts; the attribute name is the hostname, so
+      # `nixos-rebuild switch --flake .` picks the right one on each machine.
+      nixosConfigurations = nixpkgs.lib.genAttrs identity.nixosHosts (hostName: nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = inputs // { inherit identity; };
         modules = [
+          { networking.hostName = hostName; }
           disko.nixosModules.disko
           home-manager.nixosModules.home-manager {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = { inherit identity; };
               users.${user} = import ./modules/nixos/home-manager.nix;
             };
           }

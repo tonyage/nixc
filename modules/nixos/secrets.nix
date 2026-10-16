@@ -1,6 +1,6 @@
-{ config, pkgs, agenix, secrets, ... }:
+{ config, pkgs, agenix, secrets, identity, ... }:
 
-let user = "tdo"; in
+let inherit (identity) user; in
 {
   age.identityPaths = [
     "/home/${user}/.ssh/id_ed25519"

@@ -1,6 +1,6 @@
-{ secrets, ... }:
+{ secrets, identity, ... }:
 
-let user = "tdo"; in
+let inherit (identity) user; in
 {
   # Note: the installWithSecrets command you ran to boostrap the machine actually copies over
   #       a Github key pair. However, if you want to store the keypair in your nix-secrets repo

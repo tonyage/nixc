@@ -1,22 +1,24 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, identity, ... }:
 
 let
-  user = "tdo";
+  inherit (identity) user;
+  colorscheme = import ../../colorschemes/dusk.nix;
   xdg_configHome  = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
-  shared-files = import ../shared/files.nix { inherit config pkgs; };
+  shared-programs = import ../shared/home-manager.nix { inherit colorscheme config pkgs lib identity; };
+  shared-files = import ../shared/files.nix { inherit colorscheme config pkgs lib; };
 
-  polybar-user_modules = builtins.readFile (pkgs.replaceVars {
-    src = ./config/polybar/user_modules.ini;
-    packages = "${xdg_configHome}/polybar/bin/check-nixos-updates.sh";
-    searchpkgs = "${xdg_configHome}/polybar/bin/search-nixos-updates.sh";
-    launcher = "${xdg_configHome}/polybar/bin/launcher.sh";
-    powermenu = "${xdg_configHome}/rofi/bin/powermenu.sh";
-    calendar = "${xdg_configHome}/polybar/bin/popup-calendar.sh";
-  });
+  polybar-user_modules = builtins.replaceStrings
+    [ "@packages@" "@searchpkgs@" "@launcher@" "@powermenu@" "@calendar@" ]
+    [
+      "${xdg_configHome}/polybar/bin/check-nixos-updates.sh"
+      "${xdg_configHome}/polybar/bin/search-nixos-updates.sh"
+      "${xdg_configHome}/polybar/bin/launcher.sh"
+      "${xdg_configHome}/rofi/bin/powermenu.sh"
+      "${xdg_configHome}/polybar/bin/popup-calendar.sh"
+    ]
+    (builtins.readFile ./config/polybar/user_modules.ini);
 
-  polybar-config = pkgs.replaceVars {
-    src = ./config/polybar/config.ini;
+  polybar-config = pkgs.replaceVars ./config/polybar/config.ini {
     font0 = "DejaVu Sans:size=12;3";
     font1 = "feather:size=12;3"; # from overlay
   };
@@ -39,13 +41,14 @@ in
   # Use a dark theme
   gtk = {
     enable = true;
+    gtk4.theme = config.gtk.theme;
     iconTheme = {
       name = "Adwaita-dark";
-      package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
     };
     theme = {
       name = "Adwaita-dark";
-      package = pkgs.gnome.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
     };
   };
 
@@ -62,7 +65,7 @@ in
 
     polybar = {
       enable = true;
-      config = polybar-config;
+      config = "${polybar-config}";
       extraConfig = polybar-bars + polybar-colors + polybar-modules + polybar-user_modules;
       package = pkgs.polybarFull;
       script = "polybar main &";

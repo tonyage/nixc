@@ -4,7 +4,9 @@ _: {
   disko.devices = {
     disk = {
       vdb = {
-        device = "/dev/%DISK%";
+        # Set at install time: disko-install --flake .#<host> --disk vdb /dev/<disk>
+        # After install, filesystems mount by partition label, so this value is unused.
+        device = "/dev/disk/by-id/SET-WITH-disko-install--disk";
         type = "disk";
         content = {
           type = "gpt";

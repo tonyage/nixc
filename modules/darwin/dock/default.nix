@@ -1,8 +1,8 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, identity, ... }:
 with lib;
 let
   cfg = config.local.dock;
-  user = "tdo";
+  inherit (identity) user;
   inherit (pkgs) stdenv dockutil;
 in
 {

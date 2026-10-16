@@ -1,7 +1,7 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, identity, ... }:
 
 let
-  user = "tdo";
+  inherit (identity) user;
   colorscheme = import ../../colorschemes/dusk.nix;
   sharedFiles = import ../shared/files.nix { inherit colorscheme config lib pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
@@ -52,7 +52,7 @@ in
         ];
         stateVersion = "23.11";
       };
-      programs = {} // import ../shared/home-manager.nix { inherit colorscheme config pkgs lib; };
+      programs = {} // import ../shared/home-manager.nix { inherit colorscheme config pkgs lib identity; };
       manual.manpages.enable = true;
     };
   };

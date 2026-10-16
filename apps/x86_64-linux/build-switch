@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-source ../common/nix.sh
-
-switch "$@"
-clean

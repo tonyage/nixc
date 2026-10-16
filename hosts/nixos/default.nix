@@ -1,6 +1,6 @@
-{ pkgs, agenix, ... }:
+{ pkgs, agenix, identity, ... }:
 
-let user = "tdo";
+let inherit (identity) user;
     keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
 {
   imports = [
@@ -30,14 +30,9 @@ let user = "tdo";
   # Set your time zone.
   time.timeZone = "America/New_York";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking = {
-    hostName = "%HOST%"; # Define your hostname.
-    useDHCP = false;
-    interfaces."%INTERFACE%".useDHCP = true;
-  };
+  # Hostname comes from the flake (one nixosConfiguration per entry in identity.hosts).
+  # DHCP on every interface, so no interface names need to be hardcoded.
+  networking.useDHCP = true;
 
   # Turn on flag for proprietary software
   nix = {
@@ -77,7 +72,6 @@ let user = "tdo";
       # '';
 
       # LightDM Display Manager
-      displayManager.defaultSession = "none+bspwm";
       displayManager.lightdm = {
         enable = true;
         greeters.slick.enable = true;
@@ -90,12 +84,16 @@ let user = "tdo";
       };
 
       # Turn Caps Lock into Ctrl
-      layout = "us";
-      xkbOptions = "ctrl:nocaps";
-
-      # Better support for general peripherals
-      libinput.enable = true;
+      xkb = {
+        layout = "us";
+        options = "ctrl:nocaps";
+      };
     };
+
+    displayManager.defaultSession = "none+bspwm";
+
+    # Better support for general peripherals
+    libinput.enable = true;
 
     # Let's be able to SSH into this machine
     openssh.enable = true;
@@ -216,7 +214,7 @@ let user = "tdo";
     # Emacs runs as a daemon
     emacs = {
       enable = true;
-      package = pkgs.emacs-unstable;
+      package = pkgs.emacs;
     };
   };
 
@@ -235,7 +233,7 @@ let user = "tdo";
 
   # Video support
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     # nvidia.modesetting.enable = true;
 
     # Enable Xbox support
@@ -292,8 +290,8 @@ let user = "tdo";
   ];
 
   environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.system}".default # "x86_64-linux"
-    gitAndTools.gitFull
+    agenix.packages."${pkgs.stdenv.hostPlatform.system}".default # "x86_64-linux"
+    gitFull
     inetutils
   ];
 
