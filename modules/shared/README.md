@@ -12,5 +12,6 @@ This configuration gets imported by both modules. Some configuration examples in
 ├── files.nix          # Non-Nix, static configuration files (now immutable!)
 ├── home-manager.nix   # The goods; most all shared config lives here
 ├── packages.nix       # List of packages to share
+├── secrets.nix        # agenix secrets, decrypted with each machine's SSH host key
 
 ```

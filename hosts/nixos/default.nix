@@ -4,7 +4,7 @@ let inherit (identity) user;
     keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
 {
   imports = [
-    ../../modules/nixos/secrets.nix
+    ../../modules/shared/secrets.nix
     ../../modules/nixos/disk-config.nix
     ../../modules/shared
     ../../modules/shared/cachix

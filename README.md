@@ -66,8 +66,18 @@ sudo nix run github:nix-community/disko/latest#disko-install -- \
 
 ## secret management
 
-```bash
+Secrets are encrypted with [agenix](https://github.com/ryantm/agenix) and stored as `.age` files in the private `secrets` repo. `modules/shared/secrets.nix` declares where each one is installed. Every machine decrypts with its own SSH host key (`/etc/ssh/ssh_host_ed25519_key`), and the secrets repo's `agenix-rules.nix` lists which keys can decrypt each secret.
 
-# TODO secret management to handle provisioning ssh public keys via `agenix`
-# for user and system scopes
+Run `agenix` from this repo's devShell, inside the secrets repo:
+
+```bash
+cd ~/git/personal/secrets
+nix develop ~/git/personal/nix-config -c agenix -e <name>.age                                    # edit, as someone who can decrypt
+sudo $(nix develop ~/git/personal/nix-config -c which agenix) -r -i /etc/ssh/ssh_host_ed25519_key # rekey using this machine's host key
 ```
+
+**Add a machine:** on the machine, `cat /etc/ssh/ssh_host_ed25519_key.pub`. Add the key to `hosts` in `agenix-rules.nix`, rekey (`agenix -r`) from a machine that can already decrypt, push the secrets repo, then run `nix flake update secrets` and rebuild. Until then that machine can't decrypt, and agenix logs an error when you switch.
+
+**Add a YubiKey:** run `age-plugin-yubikey` once to create an identity (it asks for your PIN and a touch). Then add the `age1yubikey1…` recipient from `age-plugin-yubikey --list` to `users` and rekey. After that you can edit secrets from any machine with the YubiKey plugged in.
+
+**Bootstrapping:** a brand-new machine has to fetch the private `secrets` input before agenix can install the GitHub key. For that first build, use a temporary key or token that GitHub accepts.

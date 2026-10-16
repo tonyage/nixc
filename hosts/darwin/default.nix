@@ -4,7 +4,7 @@ let inherit (identity) user; in
 
 {
   imports = [
-    ../../modules/darwin/secrets.nix
+    ../../modules/shared/secrets.nix
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix

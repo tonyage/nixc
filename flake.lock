@@ -222,11 +222,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1792189408,
-        "narHash": "sha256-i1cv4ldkZQQFSyXTebAxdchhnim9OOaEI+coa/crfOo=",
+        "lastModified": 1792192860,
+        "narHash": "sha256-CxhGyrPl4tyH7AGaluyuTXC05dUeODzGaZWH0GRPVVs=",
         "ref": "refs/heads/main",
-        "rev": "789b2db8cc5b285f989a19058d1d5f7c32580fc6",
-        "revCount": 4,
+        "rev": "50164c194a6d384eba92366d5005cb51df7745ee",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/tonyage/secrets.git"
       },
