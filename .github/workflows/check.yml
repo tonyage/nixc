@@ -20,6 +20,9 @@ jobs:
       - name: Flake check (NixOS configurations and devShells, all systems)
         run: nix flake check --no-build --all-systems $OVERRIDE
 
+      - name: Formatting (nixfmt and prettier via nix fmt)
+        run: nix fmt $OVERRIDE -- --ci
+
   darwin:
     runs-on: macos-latest
     steps:

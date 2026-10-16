@@ -1,6 +1,13 @@
-{ agenix, pkgs, identity, ... }:
+{
+  agenix,
+  pkgs,
+  identity,
+  ...
+}:
 
-let inherit (identity) user; in
+let
+  inherit (identity) user;
+in
 
 {
   imports = [
@@ -8,22 +15,32 @@ let inherit (identity) user; in
     ../../modules/darwin/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
-     agenix.darwinModules.default
+    agenix.darwinModules.default
   ];
-
 
   # Setup user, packages, programs
   nix = {
     enable = true;
     package = pkgs.nix;
-    settings.trusted-users = [ "@admin" "${user}" ];
+    settings.trusted-users = [
+      "@admin"
+      "${user}"
+    ];
     optimise = {
       automatic = true;
-      interval = { Weekday = 0; Hour = 0; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 0;
+        Minute = 0;
+      };
     };
     gc = {
       automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 3d";
     };
 
@@ -39,9 +56,12 @@ let inherit (identity) user; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; [
-    agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages =
+    with pkgs;
+    [
+      agenix.packages."${pkgs.stdenv.hostPlatform.system}".default
+    ]
+    ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   system = {
     primaryUser = "${user}";

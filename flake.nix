@@ -32,42 +32,95 @@
       flake = false;
     };
   };
-  outputs = {
-   self,
-   darwin,
-   nix-homebrew,
-   homebrew-bundle,
-   homebrew-core,
-   homebrew-cask,
-   home-manager,
-   nixpkgs,
-   disko,
-   agenix,
-   secrets
-  } @inputs:
+  outputs =
+    {
+      self,
+      darwin,
+      nix-homebrew,
+      homebrew-bundle,
+      homebrew-core,
+      homebrew-cask,
+      home-manager,
+      nixpkgs,
+      disko,
+      agenix,
+      secrets,
+    }@inputs:
     let
       identity = import "${secrets}/identity.nix";
       inherit (identity) user;
-      linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
+      linuxSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey agenix.packages.${system}.default ];
-          shellHook = with pkgs; ''
-            export EDITOR=nvim
-          '';
+      devShell =
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default =
+            with pkgs;
+            mkShell {
+              nativeBuildInputs = with pkgs; [
+                bashInteractive
+                git
+                age
+                age-plugin-yubikey
+                agenix.packages.${system}.default
+                nixfmt # nix formatter (RFC 166 style)
+                prettier # markdown formatter
+              ];
+              shellHook = with pkgs; ''
+                export EDITOR=nvim
+              '';
+            };
         };
-      };
-    in {
+    in
+    {
       devShells = forAllSystems devShell;
+
+      # `nix fmt` formats the repo: nixfmt for Nix, prettier for Markdown
+      formatter = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        pkgs.treefmt.withConfig {
+          runtimeInputs = [
+            pkgs.nixfmt
+            pkgs.prettier
+          ];
+          settings = {
+            tree-root-file = "flake.nix";
+            formatter.nixfmt = {
+              command = "nixfmt";
+              includes = [ "*.nix" ];
+            };
+            formatter.prettier = {
+              command = "prettier";
+              options = [
+                "--write"
+                "--prose-wrap"
+                "preserve"
+              ];
+              includes = [ "*.md" ];
+            };
+          };
+        }
+      );
 
       # One configuration per host in identity.darwinHosts; darwin-rebuild looks up
       # .#$(scutil --get LocalHostName) by default, so no target is needed on each Mac.
-      darwinConfigurations = nixpkgs.lib.genAttrs identity.darwinHosts (hostName:
+      darwinConfigurations = nixpkgs.lib.genAttrs identity.darwinHosts (
+        hostName:
         darwin.lib.darwinSystem {
           system = "aarch64-darwin";
-          specialArgs = inputs // { inherit identity; };
+          specialArgs = inputs // {
+            inherit identity;
+          };
           modules = [
             { networking.localHostName = hostName; }
             home-manager.darwinModules.home-manager
@@ -92,23 +145,28 @@
 
       # One configuration per host in identity.nixosHosts; the attribute name is the hostname, so
       # `nixos-rebuild switch --flake .` picks the right one on each machine.
-      nixosConfigurations = nixpkgs.lib.genAttrs identity.nixosHosts (hostName: nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = inputs // { inherit identity; };
-        modules = [
-          { networking.hostName = hostName; }
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit identity; };
-              users.${user} = import ./modules/nixos/home-manager.nix;
-            };
-          }
-          ./hosts/nixos
-        ];
-      }
-    );
-  };
+      nixosConfigurations = nixpkgs.lib.genAttrs identity.nixosHosts (
+        hostName:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = inputs // {
+            inherit identity;
+          };
+          modules = [
+            { networking.hostName = hostName; }
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit identity; };
+                users.${user} = import ./modules/nixos/home-manager.nix;
+              };
+            }
+            ./hosts/nixos
+          ];
+        }
+      );
+    };
 }

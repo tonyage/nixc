@@ -1,14 +1,27 @@
-{ config, pkgs, lib, identity, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  identity,
+  ...
+}:
 
 let
   inherit (identity) user;
   colorscheme = import ../../colorschemes/dusk.nix;
-  sharedFiles = import ../shared/files.nix { inherit colorscheme config lib pkgs; };
+  sharedFiles = import ../shared/files.nix {
+    inherit
+      colorscheme
+      config
+      lib
+      pkgs
+      ;
+  };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
   imports = [
-   ./dock
+    ./dock
   ];
 
   # It me
@@ -21,8 +34,8 @@ in
 
   homebrew = {
     enable = true;
-    casks = pkgs.callPackage ./casks.nix {};
-    brews = pkgs.callPackage ./brews.nix {};
+    casks = pkgs.callPackage ./casks.nix { };
+    brews = pkgs.callPackage ./brews.nix { };
     # onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
@@ -42,19 +55,36 @@ in
     backupFileExtension = "backup";
     useGlobalPkgs = true;
     extraSpecialArgs = { inherit colorscheme; };
-    users.${user} = { pkgs, config, lib, ... }:{
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix {};
-        file = lib.mkMerge [
-          sharedFiles
-          additionalFiles
-        ];
-        stateVersion = "23.11";
+    users.${user} =
+      {
+        pkgs,
+        config,
+        lib,
+        ...
+      }:
+      {
+        home = {
+          enableNixpkgsReleaseCheck = false;
+          packages = pkgs.callPackage ./packages.nix { };
+          file = lib.mkMerge [
+            sharedFiles
+            additionalFiles
+          ];
+          stateVersion = "23.11";
+        };
+        programs =
+          { }
+          // import ../shared/home-manager.nix {
+            inherit
+              colorscheme
+              config
+              pkgs
+              lib
+              identity
+              ;
+          };
+        manual.manpages.enable = true;
       };
-      programs = {} // import ../shared/home-manager.nix { inherit colorscheme config pkgs lib identity; };
-      manual.manpages.enable = true;
-    };
   };
 
   # Fully declarative dock using the latest from Nix Store

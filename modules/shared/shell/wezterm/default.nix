@@ -1,4 +1,10 @@
-{ colorscheme, config, pkgs, ... }: with colorscheme;
+{
+  colorscheme,
+  config,
+  pkgs,
+  ...
+}:
+with colorscheme;
 let
   fontSize = if pkgs.stdenv.hostPlatform.system == "x86_64-linux" then "10.0" else "11.0";
   lineHeight = "1.2";

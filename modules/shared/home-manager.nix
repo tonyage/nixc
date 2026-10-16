@@ -1,4 +1,10 @@
-{ colorscheme, pkgs, lib, identity, ... }:
+{
+  colorscheme,
+  pkgs,
+  lib,
+  identity,
+  ...
+}:
 with colorscheme;
 let
   inherit (identity) user name email;
@@ -8,13 +14,16 @@ let
   idFile =
     if pkgs.stdenv.hostPlatform.isDarwin then
       "/Users/${user}/.ssh/id_github"
-    else "/home/${user}/.ssh/id_github";
+    else
+      "/home/${user}/.ssh/id_github";
   repo =
     if pkgs.stdenv.hostPlatform.isDarwin then
       "/Users/${user}/git/personal/nix-config"
-    else "/home/${user}/git/personal/nix-config";
+    else
+      "/home/${user}/git/personal/nix-config";
   # wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
-in {
+in
+{
   # Rebuild helper: `nh darwin switch` / `nh os switch` show a package diff before switching
   nh = {
     enable = true;
@@ -68,12 +77,15 @@ in {
   zsh = {
     enable = true;
     defaultKeymap = "emacs";
-    envExtra = ''source $HOME/.zshenv-local'';
+    envExtra = "source $HOME/.zshenv-local";
     shellAliases = import ./config/zsh/aliases.nix;
     autosuggestion = {
       enable = true;
       highlight = "fg=${gradients.dark.black15}";
-      strategy = [ "history" "completion" ];
+      strategy = [
+        "history"
+        "completion"
+      ];
     };
     enableCompletion = true;
     syntaxHighlighting.enable = true;
@@ -82,8 +94,16 @@ in {
       VISUAL = "nvim";
     };
     plugins = [
-      { name = "powerlevel10k"; src = pkgs.zsh-powerlevel10k; file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme"; }
-      { name = "zsh-autopair"; src = pkgs.zsh-autopair; file = "share/zsh/zsh-autopair/autopair.zsh"; }
+      {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+      }
+      {
+        name = "zsh-autopair";
+        src = pkgs.zsh-autopair;
+        file = "share/zsh/zsh-autopair/autopair.zsh";
+      }
     ];
     initContent = lib.mkBefore ''
       if zmodload zsh/terminfo && (( terminfo[colors] >= 256 )); then
@@ -140,7 +160,7 @@ in {
       };
       init.defaultBranch = "main";
       core = {
-	      editor = "nvim";
+        editor = "nvim";
         autocrlf = "input";
       };
       push.autoSetupRemote = true;
@@ -153,12 +173,8 @@ in {
     enable = true;
     enableDefaultConfig = false;
     includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-        "/home/${user}/.ssh/config_external"
-      )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-        "/Users/${user}/.ssh/config_external"
-      )
+      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/config_external")
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/config_external")
     ];
     settings = {
       "github.com" = {

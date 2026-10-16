@@ -1,4 +1,5 @@
 ## Layout
+
 ```
 .
 ├── default.nix        # Defines module, system-level config,

@@ -1,4 +1,10 @@
-{ lib, pkgs, secrets, identity, ... }:
+{
+  lib,
+  pkgs,
+  secrets,
+  identity,
+  ...
+}:
 
 # agenix secrets, shared by darwin and NixOS.
 #
@@ -12,9 +18,16 @@ let
   group = if isDarwin then "staff" else "users";
 
   # Only declare a secret once its .age file exists, so a fresh secrets repo (or CI's stub) still evaluates
-  secret = name: attrs: lib.optionalAttrs (builtins.pathExists "${secrets}/${name}.age") {
-    ${name} = { file = "${secrets}/${name}.age"; owner = user; inherit group; } // attrs;
-  };
+  secret =
+    name: attrs:
+    lib.optionalAttrs (builtins.pathExists "${secrets}/${name}.age") {
+      ${name} = {
+        file = "${secrets}/${name}.age";
+        owner = user;
+        inherit group;
+      }
+      // attrs;
+    };
 in
 {
   age.secrets = secret "github-ssh-key" {

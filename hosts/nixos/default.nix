@@ -1,7 +1,14 @@
-{ pkgs, agenix, identity, ... }:
+{
+  pkgs,
+  agenix,
+  identity,
+  ...
+}:
 
-let inherit (identity) user;
-    keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
+let
+  inherit (identity) user;
+  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ];
+in
 {
   imports = [
     ../../modules/shared/secrets.nix
@@ -20,7 +27,14 @@ let inherit (identity) user;
       };
       efi.canTouchEfiVariables = true;
     };
-    initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
     # Uncomment for AMD GPU
     # initrd.kernelModules = [ "amdgpu" ];
     kernelPackages = pkgs.linuxPackages_latest;
@@ -40,7 +54,7 @@ let inherit (identity) user;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-   };
+  };
 
   programs = {
     gnupg.agent.enable = true;
@@ -77,7 +91,7 @@ let inherit (identity) user;
       overrideDevices = true;
 
       settings = {
-        devices = {};
+        devices = { };
         options.globalAnnounceEnabled = false; # Only sync on LAN
       };
     };
@@ -95,8 +109,7 @@ let inherit (identity) user;
     # nvidia.modesetting.enable = true;
   };
 
-
- # Add docker daemon
+  # Add docker daemon
   virtualisation.docker.enable = true;
   virtualisation.docker.logDriver = "json-file";
 
@@ -119,15 +132,17 @@ let inherit (identity) user;
   # Don't require password for users in `wheel` group for these commands
   security.sudo = {
     enable = true;
-    extraRules = [{
-      commands = [
-       {
-         command = "${pkgs.systemd}/bin/reboot";
-         options = [ "NOPASSWD" ];
-        }
-      ];
-      groups = [ "wheel" ];
-    }];
+    extraRules = [
+      {
+        commands = [
+          {
+            command = "${pkgs.systemd}/bin/reboot";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+        groups = [ "wheel" ];
+      }
+    ];
   };
 
   fonts.packages = with pkgs; [

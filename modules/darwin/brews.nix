@@ -1,5 +1,4 @@
-_:
-[
+_: [
   # { name = "qmk/qmk/qmk"; }
   # { name = "koekeishiya/formulae/yabai" }
   # {
