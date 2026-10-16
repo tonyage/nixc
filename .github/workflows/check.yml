@@ -1,0 +1,32 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  # The real secrets input is private; evaluate against the stub identity instead
+  OVERRIDE: --override-input secrets path:./.github/ci/secrets
+
+jobs:
+  nixos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+
+      - name: Flake check (NixOS configurations and devShells, all systems)
+        run: nix flake check --no-build --all-systems $OVERRIDE
+
+  darwin:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+
+      - name: Evaluate every darwin configuration
+        run: |
+          nix eval --json $OVERRIDE .#darwinConfigurations \
+            --apply 'builtins.mapAttrs (_: c: c.config.system.build.toplevel.drvPath)'
