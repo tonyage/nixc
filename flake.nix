@@ -106,7 +106,11 @@
                 "--prose-wrap"
                 "preserve"
               ];
-              includes = [ "*.md" ];
+              includes = [
+                "*.md"
+                "*.yaml"
+                "*.yml"
+              ];
             };
           };
         }
