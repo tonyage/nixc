@@ -60,6 +60,7 @@ with pkgs;
   nodejs
 
   # llm tooling
+  claude-code
   opencode
   opencode-claude-auth
 
