@@ -35,6 +35,9 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
+    withRuby = false;
+    withPython3 = false;
+
     # Load home-manager's generated init (provider settings) through the wrapper instead of
     # writing ~/.config/nvim/init.lua, which belongs to the cloned config
     sideloadInitLua = true;

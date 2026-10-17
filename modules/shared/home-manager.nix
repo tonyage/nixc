@@ -8,14 +8,10 @@
 with colorscheme;
 let
   inherit (identity) user name email;
+  zshAliases = import ./config/zsh/aliases.nix { inherit lib; };
   main = ./config/p10k/main.zsh;
   tty = ./config/p10k/tty.zsh;
   pure = ./config/p10k/pure.zsh;
-  idFile =
-    if pkgs.stdenv.hostPlatform.isDarwin then
-      "/Users/${user}/.ssh/id_github"
-    else
-      "/home/${user}/.ssh/id_github";
   repo =
     if pkgs.stdenv.hostPlatform.isDarwin then
       "/Users/${user}/.config/nixc"
@@ -92,7 +88,8 @@ in
     enable = true;
     defaultKeymap = "emacs";
     envExtra = "source $HOME/.zshenv-local";
-    shellAliases = import ./config/zsh/aliases.nix;
+    shellAliases = zshAliases.directory;
+    siteFunctions = zshAliases.functions;
     autosuggestion = {
       enable = true;
       highlight = "fg=${gradients.dark.black15}";
@@ -134,7 +131,6 @@ in
       [[ ! -r "$P10K_INSTANT_PROMPT" ]] || source "$P10K_INSTANT_PROMPT"
       fpath+=("/usr/share/zsh/site-functions")
       fpath+=("/opt/homebrew/share/zsh/site-functions")
-      ${builtins.readFile ./config/zsh/docker.zsh}
       ${builtins.readFile ./config/zsh/utils.zsh}
       eval "$(zoxide init zsh)"
       eval "$(direnv hook zsh)"
@@ -186,14 +182,12 @@ in
   ssh = {
     enable = true;
     enableDefaultConfig = false;
-    includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/config_external")
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/config_external")
-    ];
+    # Untracked per-machine SSH settings (work hosts, jump boxes); ignored if missing
+    includes = [ "~/.ssh/config_external" ];
     settings = {
       "github.com" = {
         identitiesOnly = true;
-        identityFile = idFile;
+        identityFile = "~/.ssh/id_github"; # installed by agenix (modules/shared/secrets.nix)
       };
     };
   };
