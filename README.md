@@ -44,7 +44,7 @@ To override git settings on a single machine (for example, a work email), create
 
 ```ini
 [user]
-	email = me@work.com
+  email = me@work.com
 ```
 
 ## Setup
@@ -75,13 +75,19 @@ sudo nix run github:nix-community/disko/latest#disko-install -- \
 
 ### Day to day
 
-| Task               | Command                                                                          |
-| ------------------ | -------------------------------------------------------------------------------- |
-| Rebuild and switch | `nh darwin switch` / `nh os switch` (shows a package diff first)                 |
-| Without nh         | `sudo darwin-rebuild switch --flake .` / `sudo nixos-rebuild switch --flake .`   |
-| Roll back          | `sudo darwin-rebuild --rollback` / `sudo nixos-rebuild switch --rollback`        |
-| List generations   | `darwin-rebuild --list-generations` / `nixos-rebuild list-generations`           |
-| Update inputs      | `nix flake update` (or `nix flake update secrets` after changing `identity.nix`) |
+| Task                                 | macOS                                         | NixOS                                 |
+| ------------------------------------ | --------------------------------------------- | ------------------------------------- |
+| Rebuild and switch                   | `nh darwin switch`                            | `nh os switch`                        |
+| Build only, to preview the diff      | `nh darwin build`                             | `nh os build`                         |
+| Rebuild without nh                   | `sudo darwin-rebuild switch --flake .`        | `sudo nixos-rebuild switch --flake .` |
+| List generations                     | `sudo darwin-rebuild --list-generations`      | `nh os info`                          |
+| Roll back one generation             | `sudo darwin-rebuild --rollback`              | `nh os rollback`                      |
+| Switch to a specific generation      | `sudo darwin-rebuild --switch-generation <N>` | `nh os rollback --to <N>`             |
+| Delete old generations, keep 5       | `nh clean all --keep 5`                       | `nh clean all --keep 5`               |
+| Delete generations older than 7 days | `nh clean all --keep-since 7d`                | `nh clean all --keep-since 7d`        |
+| Update inputs                        | `nix flake update`                            | `nix flake update`                    |
+
+`nh darwin` has no `info` or `rollback` (as of nh 4.4.2), so macOS uses `darwin-rebuild` for those. On macOS, `nix.gc` in `hosts/darwin` already deletes generations older than 3 days every Sunday. After changing `identity.nix`, run `nix flake update secrets`.
 
 ## Secret management
 
