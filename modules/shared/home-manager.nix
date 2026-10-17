@@ -42,7 +42,14 @@ in
     enable = true;
     enableZshIntegration = true;
     defaultCommand = "fd --type f --strip-cwd-prefix";
-    fileWidget.command = "fd --type f --strip-cwd-prefix --exclude .git";
+    fileWidget = {
+      command = "fd --type f --strip-cwd-prefix --exclude .git";
+      # Ctrl-T previews files with bat (dusk theme, line numbers); ctrl-/ toggles the preview
+      options = [
+        "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+        "--bind 'ctrl-/:toggle-preview'"
+      ];
+    };
     defaultOptions = [
       "--border"
       "--color fg:${normal.white},fg+:${normal.green},bg:${normal.black},bg+:${normal.black}"

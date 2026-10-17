@@ -71,7 +71,7 @@
                 age-plugin-yubikey
                 agenix.packages.${system}.default
                 nixfmt # nix formatter (RFC 166 style)
-                prettier # markdown formatter
+                prettier
               ];
               shellHook = with pkgs; ''
                 export EDITOR=nvim
