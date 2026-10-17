@@ -57,6 +57,15 @@ in
   };
 
   programs = {
+    # Weekly `nh clean all`: keeps the last 3 generations of every profile (system, user,
+    # home-manager; current included) and garbage-collects the store
+    nh = {
+      enable = true;
+      clean = {
+        enable = true;
+        extraArgs = "--keep=3";
+      };
+    };
     gnupg.agent.enable = true;
     dconf.enable = true;
     zsh.enable = true;

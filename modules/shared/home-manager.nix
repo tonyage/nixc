@@ -28,6 +28,13 @@ in
   nh = {
     enable = true;
     flake = repo;
+    # macOS: weekly `nh clean user` keeps the last 3 user and home-manager generations (current
+    # included). System generations stay on nix.gc in hosts/darwin. NixOS uses the system-wide
+    # programs.nh.clean in hosts/nixos instead, which covers every profile.
+    clean = {
+      enable = pkgs.stdenv.hostPlatform.isDarwin;
+      extraArgs = "--keep=3"; # one argv entry on macOS, so no space
+    };
   };
 
   # Shared shell configuration
