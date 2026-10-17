@@ -63,6 +63,8 @@ in
         ...
       }:
       {
+        imports = [ ../shared/neovim.nix ];
+
         home = {
           enableNixpkgsReleaseCheck = false;
           packages = pkgs.callPackage ./packages.nix { };

@@ -12,7 +12,6 @@ with pkgs;
   coreutils
   isort
   killall
-  neovim
   openssh
   protobuf
   ruff

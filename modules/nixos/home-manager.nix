@@ -29,6 +29,8 @@ let
 
 in
 {
+  imports = [ ../shared/neovim.nix ];
+
   home = {
     enableNixpkgsReleaseCheck = false;
     username = "${user}";
