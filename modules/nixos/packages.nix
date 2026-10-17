@@ -6,10 +6,7 @@ let
 in
 shared-packages
 ++ [
-
-  # Security and authentication
   yubikey-agent
-  keepassxc
 
   # App and package management
   appimage-run
@@ -22,17 +19,8 @@ shared-packages
   fontconfig
   font-manager
 
-  # Productivity tools
-  bc # old school calculator
-  galculator
-
-  # Audio tools
-  cava # Terminal audio visualizer
-  pavucontrol # Pulse audio controls
-
   # Testing and development tools
   direnv
-  postgresql
 
   # Text and terminal utilities
   tree

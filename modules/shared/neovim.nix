@@ -6,13 +6,11 @@
 { lib, pkgs, ... }:
 
 let
-  # Repos cloned on first activation, relative to $HOME. Existing directories are never touched.
   repos = [
     {
       url = "git@github.com:tonyage/nvim.git";
       path = ".config/nvim";
     }
-    # dusk colorscheme; the nvim config loads it from here (lua/plugins/theme.lua, `dir = ...`)
     {
       url = "git@github.com:tonyage/dusk.git";
       path = ".config/dusk";

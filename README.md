@@ -21,7 +21,7 @@ Specs and definitions for provisioning macOS and Linux machines in a few command
    > [!NOTE]
    > **Why not Determinate's installer?** It now installs Determinate Nix, which manages its own daemon and `nix.conf`. That conflicts with `nix.enable = true` in `hosts/darwin`, which hands Nix to nix-darwin, and the first switch fails. If you want Determinate Nix anyway, set `nix.enable = false` in `hosts/darwin/default.nix`. Then also move the `nix.settings`, `nix.gc` and `nix.optimise` settings into Determinate's config, because nix-darwin ignores them when it doesn't manage Nix.
 
-3. Clone this repo to `~/git/personal/nix-config`, the path `nh` is configured to use.
+3. Clone this repo to `~/.config/nixc`, the path `nh` is configured to use.
 
 ## Identity and hosts
 
@@ -54,7 +54,7 @@ To override git settings on a single machine (for example, a work email), create
 Pick a name from `darwinHosts` (or add one). The first switch sets the Mac's hostname to it.
 
 ```bash
-cd ~/git/personal/nix-config
+cd ~/.config/nixc
 
 # Fetch inputs, including the private secrets repo, with your own SSH key; under sudo, root has none
 nix --extra-experimental-features 'nix-command flakes' flake archive
@@ -97,10 +97,10 @@ Run `agenix` from this repo's devShell, inside the secrets repo:
 cd ~/git/personal/secrets
 
 # Edit a secret (as someone who can decrypt it)
-nix develop ~/git/personal/nix-config -c agenix -e <name>.age
+nix develop ~/.config/nixc -c agenix -e <name>.age
 
 # Rekey every secret, decrypting with this machine's host key
-sudo $(nix develop ~/git/personal/nix-config -c which agenix) -r -i /etc/ssh/ssh_host_ed25519_key
+sudo $(nix develop ~/.config/nixc -c which agenix) -r -i /etc/ssh/ssh_host_ed25519_key
 ```
 
 ### Adding a machine

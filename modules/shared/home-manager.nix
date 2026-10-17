@@ -18,9 +18,9 @@ let
       "/home/${user}/.ssh/id_github";
   repo =
     if pkgs.stdenv.hostPlatform.isDarwin then
-      "/Users/${user}/git/personal/nix-config"
+      "/Users/${user}/.config/nixc"
     else
-      "/home/${user}/git/personal/nix-config";
+      "/home/${user}/.config/nixc";
   # wezterm = import ./shell/wezterm { inherit colorscheme config pkgs; };
 in
 {
