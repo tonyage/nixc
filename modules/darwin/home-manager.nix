@@ -44,10 +44,6 @@ in
     #
     # $ nix shell nixpkgs#mas
     # $ mas search <app name>
-    #
-    # If you have previously added these apps to your Mac App Store profile (but not installed them on this system),
-    # you may receive an error message "Redownload Unavailable with This Apple ID".
-    # This message is safe to ignore. (https://github.com/dustinlyons/nixos-config/issues/83)
   };
 
   # Enable home-manager
@@ -63,7 +59,10 @@ in
         ...
       }:
       {
-        imports = [ ../shared/neovim.nix ];
+        imports = [
+          ../shared/neovim.nix
+          ./terminal.nix
+        ];
 
         home = {
           enableNixpkgsReleaseCheck = false;
