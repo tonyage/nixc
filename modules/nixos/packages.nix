@@ -15,6 +15,7 @@ shared-packages
   home-manager
 
   # Media and design tools
+  bambu-studio
   vlc
   fontconfig
   font-manager

@@ -58,6 +58,8 @@ with pkgs;
   prettier
   nodejs
 
+  openscad-unstable
+
   # llm tooling
   claude-code
   opencode
