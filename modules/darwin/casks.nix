@@ -8,8 +8,6 @@ _:
   "ghostty"
   "qbittorrent"
 
-  "bambu-studio"
-
   # Communication Tools
   # "slack"
   # "microsoft-teams"

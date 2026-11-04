@@ -61,6 +61,7 @@ in
       {
         imports = [
           ../shared/neovim.nix
+          ../shared/claude.nix
           ./terminal.nix
         ];
 

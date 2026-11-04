@@ -29,7 +29,12 @@ let
 
 in
 {
-  imports = [ ../shared/neovim.nix ];
+  imports = [
+    ../shared/neovim.nix
+    ../shared/claude.nix
+  ];
+
+  _module.args = { inherit colorscheme; };
 
   home = {
     enableNixpkgsReleaseCheck = false;

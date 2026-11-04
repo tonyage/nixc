@@ -60,6 +60,10 @@ with pkgs;
 
   openscad-unstable
 
+  # Android: adb, fastboot and friends, plus screen mirroring/control over adb
+  android-tools
+  scrcpy
+
   # llm tooling
   claude-code
   opencode
