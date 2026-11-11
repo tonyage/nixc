@@ -28,7 +28,6 @@ with pkgs;
 
   # Language servers
   gopls
-  marksman
   spectral-language-server
   yaml-language-server
 

@@ -29,6 +29,13 @@ let
         fi
       fi
     '';
+
+  # nixpkgs' neocmakelsp 0.11.2 is missing pkg-config and oniguruma, which its onig_sys crate is
+  # set to link against, so the build fails. Adding them stays harmless once nixpkgs fixes it.
+  neocmakelsp = pkgs.neocmakelsp.overrideAttrs (old: {
+    nativeBuildInputs = old.nativeBuildInputs ++ [ pkgs.pkg-config ];
+    buildInputs = (old.buildInputs or [ ]) ++ [ pkgs.oniguruma ];
+  });
 in
 {
   programs.neovim = {
@@ -62,7 +69,6 @@ in
         dockerfile-language-server
         docker-compose-language-service
         hadolint
-        marksman
         markdownlint-cli2
         nil
         nixfmt
@@ -74,8 +80,13 @@ in
         yaml-language-server
         zls
       ]
-      # C compiler for treesitter parsers; macOS uses the Xcode command line tools' clang
-      ++ lib.optional pkgs.stdenv.hostPlatform.isLinux gcc;
+      ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+        # C compiler for treesitter parsers; macOS uses the Xcode command line tools' clang
+        gcc
+        # marksman needs .NET, which the binary cache only has for Linux; on macOS it would
+        # build .NET from source, so macOS gets marksman from Homebrew (modules/darwin/brews.nix)
+        marksman
+      ];
   };
 
   # Clone the config and the repos it depends on; never touch an existing directory
